@@ -1,0 +1,6 @@
+This list is based on the analysis of Alesina and others,[4] they develop fractionalization scores based on ethnicity, religious and linguistic data directly from the Encyclopædia Britannica lists. This list is biased by how the Britannica chooses to list ethnic groups, but it does not make a judgement call on which identities are more salient than others. According to Patsiurko et al.
+
+"One of the most ambitious and widely used of these new [fractionalization] indices was created by Alesina et al. (2003) who developed measures of ethnic, linguistic and religious fractionalization in 190 countries using more current data from the Encyclopaedia Britannica Book of the Year (2001) ... and other sources. But again scholars offered criticisms (e.g. Fearon 2003; Posner 2004). First, there is inconsistency in terms of the years covered. For instance, the Encyclopaedia Britannica provides ethnicity data for only 124 of 190 countries, so Alesina had to resort to other sources for the rest. Hence, his ethnicity data covered years ranging from 1979 to 2001, depending on the country. Second, he offered one-time measures of fractionalization, thereby being unable to say anything about change over time"[2]
+
+
+For More info on the data visit -https://en.wikipedia.org/wiki/List_of_countries_ranked_by_ethnic_and_cultural_diversity_level

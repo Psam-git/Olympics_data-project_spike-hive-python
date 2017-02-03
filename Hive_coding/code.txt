@@ -1,0 +1,104 @@
+Olympic coding scheme
+
+create external table medaltbl (Nationality varchar(100), bronze_cnt int, silver_cnt int, gold_cnt int)
+row format delimited fields terminated by ','
+location '/kubrick/olympics/medalcnt'
+
+insert into medaltbl
+select 
+g.nationality Nationality,
+b.bronze_cnt bronze_cnt,
+s.silver_cnt silver_cnt,
+g.gold_cnt gold_cnt 
+from athletes_bronze b
+join athletes_gold g
+on b.nationality = g.nationality
+join athletes_silver s
+on g.nationality = s.nationality
+
+create external table cntrycode (country varchar(255), code varchar(255))
+row format delimited fields terminated by ','
+stored as textfile
+location '/kubrick/olympics/cntry_code'
+
+create Database olympics;
+
+alter table fundingclean rename to olympics.fundingclean
+
+
+drop table cntrycode
+
+create table 
+
+#creating table countaining diversity data and medal count
+
+create external table medaltblxtra 
+row format delimited fields terminated by ','
+stored as textfile
+as
+select 
+c.country,
+c.code,
+m.bronze_cnt,
+m.gold_cnt,
+m.silver_cnt,
+d.ling_fract,
+d.relig_fract,
+d.ethnic_fract
+from cntrycode c
+join medaltbl m
+on (c.code = m.country)
+join diversity d
+on (lower(c.country) = lower(d.nationality))
+
+
+#Medal haul per country 
+
+Select 
+nationality,
+sum(gold) as gold_cnt
+from athletes
+where gold > 0
+group by nationality
+
+
+Select 
+nationality,
+sum(silver) as silver_cnt
+from athletes
+where silver > 0
+group by nationality
+
+Select 
+nationality,
+sum(bronze) as bronze_cnt
+from athletes
+where bronze > 0
+group by nationality
+
+#merging funding data with country performance 
+
+CREATE TABLE `fundingperformance1`(
+2	  `sport` string COMMENT '', 
+3	  `gold_medal_no` int COMMENT '', 
+4	  `silver_medal_no` int COMMENT '', 
+5	  `bronze_medal_no` int COMMENT '', 
+6	  `funding` bigint COMMENT '')
+7	ROW FORMAT SERDE 
+8	  'org.apache.hadoop.hive.serde2.avro.AvroSerDe' 
+9	STORED AS INPUTFORMAT 
+10	  'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat' 
+11	OUTPUTFORMAT 
+12	  'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+13	LOCATION
+14	  'hdfs://localhost:8020/user/hive/warehouse/olympics.db/fundingperformance1'
+15	TBLPROPERTIES (
+16	  'COLUMN_STATS_ACCURATE'='false', 
+17	  'avro.schema.url'='/kubrick/schemas/medfund.avsc', 
+18	  'last_modified_by'='training', 
+19	  'last_modified_time'='1484757928', 
+20	  'numFiles'='0', 
+21	  'numRows'='-1', 
+22	  'rawDataSize'='-1', 
+23	  'totalSize'='0', 
+24	  'transient_lastDdlTime'='1484757928')

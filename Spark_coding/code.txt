@@ -1,0 +1,9 @@
+#spark_codes 
+f = sc.textFile('/kubrick/olympics/funding/funding') #load file into spark
+fbody = f.filter(lambda x: x!='Sport') #get rid of header
+fbody = f.map(lambda x: x.split('\t')) #makes it easier to play with 
+frio = fbody.filter(lambda x:x[0] !='Sport') #remove heading
+frioc = frio.map(lambda x: (x[0],x[1].replace(',','').replace('n/a',''))) #getting rid of commas and strings 
+friocl = frioc.map(lambda x:x[0],x[1][2,:])#get rid of pound sign 
+
+# last stage is to use the .saveAsTextFile('/pathtofile') to get it back to hadoop storage 
